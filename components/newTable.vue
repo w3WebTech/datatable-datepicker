@@ -1,3 +1,6 @@
+
+
+
 <template>
     <div class="px-5 mt-8">
         <div>
@@ -159,8 +162,11 @@
             </div>
         </div>
 
-        <Drawer v-model:visible="visibleRight" header="Drawer" position="right">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit...</p>
+        <Drawer v-model:visible="visibleRight"  position="right" :style="{ width: '80%' }">
+            <template #header>
+    <!-- Leave this empty to remove the header -->
+  </template>
+           <DrawerContent/>
         </Drawer>
 
         <Toast />
@@ -477,6 +483,20 @@ const applyCustomDateFilter = () => {
 
 </script>
 
-<style scoped>
-
+<style >
+.p-drawer-content{
+    flex-grow: none !important;
+    overflow-y:none !important;
+    padding-left: none !important;
+    padding-right:none !important;
+    padding-top: 10px !important;
+    padding-bottom: none !important;
+}
+.p-drawer-header {
+    display: none !important;
+    flex-shrink: 0;
+    align-items: none ;
+    justify-content: space-between;
+    padding: 0px !important;
+}
 </style>
