@@ -129,7 +129,7 @@
                             :sortable="true">
                             <template #body="slotProps">
                                 <div v-if="col.field === 'action'" style="display: flex;">
-                                    <Button icon="pi pi-check" @click="visibleRight = true" severity="secondary"
+                                    <Button icon="pi pi-check" @click="handleDrawerClick(slotProps.data)" severity="secondary"
                                         size="small" rounded style="margin: 2px;margin-left:0px !important;" />
                                     <Button icon="pi pi-bookmark" @click="callnewvalue" severity="secondary"
                                         size="small" rounded style="margin: 2px;padding:2px !important;" />
@@ -162,12 +162,12 @@
             </div>
         </div>
 
-        <Drawer v-model:visible="visibleRight"  position="right" :style="{ width: '80%' }">
-            <template #header>
-    <!-- Leave this empty to remove the header -->
-  </template>
-           <DrawerContent/>
-        </Drawer>
+        <Drawer v-model:visible="visibleRight" position="right" :style="{ width: '80%' }">
+    <template #header>
+        <!-- Leave this empty to remove the header -->
+    </template>
+    <DrawerContent :leadData="selectedLeadData" />
+</Drawer>
 
         <Toast />
     </div>
@@ -210,7 +210,7 @@ const rowsPerPage = ref(10);
 const currentPage = ref(0);
 const menu = ref();
 const value = ref('');
-
+const selectedLeadData = ref(null); 
 
 
 const emit = defineEmits([]);
@@ -236,8 +236,8 @@ const selectedColumns = ref([
     { field: 'action', header: 'Action' }
 ]);
 const handleUserClick = (product) => {
-    debugger
-    console.log('User icon clicked, product:', product);
+ 
+    console.log(selectedLeadData,"selectedLeadData");
     navigateToProductDetail(product);
 };
 
@@ -274,7 +274,12 @@ const navigateToProductDetail = (product) => {
 //     rowsPerPage.value = event.rows; // Update the rows per page when changed from the paginator
 // };
 
-
+const handleDrawerClick = (product) => {
+  
+    selectedLeadData.value = product; // Set the selected lead data
+    console.log(selectedLeadData.value,"selectedLeadData.value")
+    visibleRight.value = true; // Open the drawer
+};
 const selectedCategories = ref([]);
 const filteredProducts = computed(() => {
     let filtered = products.value;
